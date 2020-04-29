@@ -1,0 +1,199 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TekkenProjectDB.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="TekkenProjectDBStoreContainer">
+    <EntitySet Name="Characters" EntityType="TekkenProjectDB.Store.Characters" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Stats" EntityType="TekkenProjectDB.Store.Stats" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PlayStyles" EntityType="TekkenProjectDB.Store.PlayStyles" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="CharactersStats" Association="TekkenProjectDB.Store.CharactersStats">
+      <End Role="Characters" EntitySet="Characters" />
+      <End Role="Stats" EntitySet="Stats" />
+    </AssociationSet>
+    <AssociationSet Name="CharactersPlayStyle" Association="TekkenProjectDB.Store.CharactersPlayStyle">
+      <End Role="Characters" EntitySet="Characters" />
+      <End Role="PlayStyle" EntitySet="PlayStyles" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Characters">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Image" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Stats">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Punishers" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Plus_Frame_Moves" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CharactersID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PlayStyles">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Play_Style" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Difficulty" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CharactersID" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="CharactersStats">
+    <End Role="Characters" Type="TekkenProjectDB.Store.Characters" Multiplicity="1" />
+    <End Role="Stats" Type="TekkenProjectDB.Store.Stats" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Characters">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Stats">
+        <PropertyRef Name="CharactersID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CharactersPlayStyle">
+    <End Role="Characters" Type="TekkenProjectDB.Store.Characters" Multiplicity="1" />
+    <End Role="PlayStyle" Type="TekkenProjectDB.Store.PlayStyles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Characters">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PlayStyle">
+        <PropertyRef Name="CharactersID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="TekkenProjectDB" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="TekkenProjectDBContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Characters" EntityType="TekkenProjectDB.Characters" />
+          <EntitySet Name="Stats" EntityType="TekkenProjectDB.Stats" />
+          <EntitySet Name="PlayStyles" EntityType="TekkenProjectDB.PlayStyle" />
+          <AssociationSet Name="CharactersStats" Association="TekkenProjectDB.CharactersStats">
+            <End Role="Characters" EntitySet="Characters" />
+            <End Role="Stats" EntitySet="Stats" />
+          </AssociationSet>
+          <AssociationSet Name="CharactersPlayStyle" Association="TekkenProjectDB.CharactersPlayStyle">
+            <End Role="Characters" EntitySet="Characters" />
+            <End Role="PlayStyle" EntitySet="PlayStyles" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Characters">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Image" Type="String" Nullable="false" />
+          <NavigationProperty Name="Stats" Relationship="TekkenProjectDB.CharactersStats" FromRole="Characters" ToRole="Stats" />
+          <NavigationProperty Name="PlayStyles" Relationship="TekkenProjectDB.CharactersPlayStyle" FromRole="Characters" ToRole="PlayStyle" />
+        </EntityType>
+        <EntityType Name="Stats">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Punishers" Type="String" Nullable="false" />
+          <Property Name="Plus_Frame_Moves" Type="String" Nullable="false" />
+          <NavigationProperty Name="Character" Relationship="TekkenProjectDB.CharactersStats" FromRole="Stats" ToRole="Characters" />
+          <Property Name="CharactersID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PlayStyle">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Play_Style" Type="String" Nullable="false" />
+          <Property Name="Difficulty" Type="String" Nullable="false" />
+          <NavigationProperty Name="Character" Relationship="TekkenProjectDB.CharactersPlayStyle" FromRole="PlayStyle" ToRole="Characters" />
+          <Property Name="CharactersID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="CharactersStats">
+          <End Type="TekkenProjectDB.Characters" Role="Characters" Multiplicity="1" />
+          <End Type="TekkenProjectDB.Stats" Role="Stats" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Characters">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Stats">
+              <PropertyRef Name="CharactersID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CharactersPlayStyle">
+          <End Type="TekkenProjectDB.Characters" Role="Characters" Multiplicity="1" />
+          <End Type="TekkenProjectDB.PlayStyle" Role="PlayStyle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Characters">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PlayStyle">
+              <PropertyRef Name="CharactersID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="TekkenProjectDBStoreContainer" CdmEntityContainer="TekkenProjectDBContainer">
+    <EntitySetMapping Name="Characters">
+      <EntityTypeMapping TypeName="IsTypeOf(TekkenProjectDB.Characters)">
+        <MappingFragment StoreEntitySet="Characters">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Image" ColumnName="Image" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Stats">
+      <EntityTypeMapping TypeName="IsTypeOf(TekkenProjectDB.Stats)">
+        <MappingFragment StoreEntitySet="Stats">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Punishers" ColumnName="Punishers" />
+          <ScalarProperty Name="Plus_Frame_Moves" ColumnName="Plus_Frame_Moves" />
+          <ScalarProperty Name="CharactersID" ColumnName="CharactersID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PlayStyles">
+      <EntityTypeMapping TypeName="IsTypeOf(TekkenProjectDB.PlayStyle)">
+        <MappingFragment StoreEntitySet="PlayStyles">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Play_Style" ColumnName="Play_Style" />
+          <ScalarProperty Name="Difficulty" ColumnName="Difficulty" />
+          <ScalarProperty Name="CharactersID" ColumnName="CharactersID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="5ec4313c6d7e4491a0b62d4b8a7f1cbf" Name="Diagram1" >
+        <EntityTypeShape EntityType="TekkenProjectDB.Characters" Width="1.5" PointX="6.75" PointY="2.375" />
+        <EntityTypeShape EntityType="TekkenProjectDB.Stats" Width="1.5" PointX="9.125" PointY="2.625" />
+        <EntityTypeShape EntityType="TekkenProjectDB.PlayStyle" Width="1.5" PointX="4.25" PointY="2.375" />
+        <AssociationConnector Association="TekkenProjectDB.CharactersStats" />
+        <AssociationConnector Association="TekkenProjectDB.CharactersPlayStyle" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
